@@ -27,4 +27,10 @@ export class UserDto {
 
     @IsNotEmpty()
     password: string;
+
+    @IsNotEmpty()
+    companyId: string;
+
+    @IsNotEmpty()
+    roleId: string;
 }

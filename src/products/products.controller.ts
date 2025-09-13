@@ -11,7 +11,6 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-products.dto';
-import { ProductIdDto } from './dto/product-id.dto';
 import { Request } from 'express';
 
 @UseGuards(JwtAuthGuard)
@@ -25,7 +24,7 @@ export class ProductsController {
   }
 
   @Put('update/:id')
-  async getProduct(
+  async updateProduct(
     @Param('id') productIdDto: any,
     @Body() test,
     @Req() req: Request,

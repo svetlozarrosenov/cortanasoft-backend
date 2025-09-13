@@ -44,9 +44,6 @@ export class RoleSettings {
   //monthly or yearly
   @Prop({})
   charging: string;
-
-  @Prop({ default: 'client' })
-  roleInTheSystem: string;
 }
 
 export const RoleSettingsSchema = SchemaFactory.createForClass(RoleSettings);

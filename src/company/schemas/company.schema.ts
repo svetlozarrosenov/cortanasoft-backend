@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { CompanyRolesEnum } from 'src/company-roles/constants';
+import { Document, Schema as MongooseSchema, ObjectId } from 'mongoose';
 
 export type CompanyDocument = Company & Document;
 
@@ -45,8 +46,11 @@ export class Company {
   @Prop({})
   charging: string;
 
-  @Prop({ default: 'client' })
-  roleInTheSystem: string;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    default: CompanyRolesEnum.clientCompanyRoleId,
+  })
+  roleId: ObjectId;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

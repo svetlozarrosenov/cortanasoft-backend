@@ -17,7 +17,7 @@ export class Products {
   @Prop({ required: true })
   price: number;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 }
 

@@ -5,25 +5,83 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { UserDocument } from '../../user/schemas/user.schema';
+import mongoose, { Model } from 'mongoose';
+import { User, UserDocument } from '../../user/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 import { UserDto } from '../dto/user.dto';
 import { NotificationsService } from 'src/notifications/notifications.service';
 import { JwtService } from '@nestjs/jwt';
+import { Company, CompanyDocument } from 'src/company/schemas/company.schema';
 
 @Injectable()
 export class UserService {
   public constructor(
     private notificationService: NotificationsService,
-    @InjectModel('UserSchema') private userSchema: Model<UserDocument>,
+    @InjectModel(User.name) private userSchema: Model<UserDocument>,
+    @InjectModel(Company.name) private companyModel: Model<CompanyDocument>,
     private jwtService: JwtService,
   ) {}
 
-  public async getAllCompanyUsers(user) {
-    return await this.userSchema
-      .find({ companyId: user.companyId })
-      .select('firstName lastName middleName _id city address country email');
+  public async getAllCompanyUsers(companyId) {
+    const users =  await this.userSchema.aggregate([
+      { $match: { companyId: new mongoose.Types.ObjectId(companyId) } },
+      {
+        $lookup: {
+          from: `roles`,
+          localField: 'roleId',
+          foreignField: '_id',
+          as: 'roles',
+        },
+      },
+      {
+        $unwind: {
+          path: '$roles',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          email: 1,
+          phone: 1,
+          firstName: 1,
+          middleName: 1,
+          lastName: 1,
+          address: 1,
+          city: 1,
+          country: 1,
+          role: '$roles.name',
+          roleId: '$roles._id',
+        },
+      },
+    ]);
+    console.log('crb_users', users);
+    return users;
+  }
+
+  public async create(userDto: UserDto) {
+    const newUser = new this.userSchema({
+      ...userDto,
+      password: await bcrypt.hash(userDto.password, 10),
+    });
+
+    return await newUser.save();
+  }
+
+  public async update(_id, userData) {
+    if (userData.password) {
+      userData.password = await bcrypt.hash(userData.password, 10);
+    }
+
+    const updatedUser = await this.userSchema.findOneAndUpdate(
+      { _id },
+      {
+        $set: {
+          ...userData,
+        },
+      },
+    );
+
+    return updatedUser;
   }
 
   public async register(userDto: UserDto): Promise<any> {

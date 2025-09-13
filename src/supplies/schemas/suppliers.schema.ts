@@ -29,7 +29,7 @@ export class Suppliers {
   @Prop({ type: String })
   description: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 }
 

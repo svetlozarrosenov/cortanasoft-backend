@@ -6,22 +6,21 @@ import {
   Get,
   Req,
   Query,
+  Param,
+  Put,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { UserDto } from '../../user/dto/user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ConfirmUserDto } from '../dto/confirm-user.dto';
 import { Request } from 'express';
+import { CompanyRolesEnum } from 'src/company-roles/constants';
+import { CompanyRoles } from 'src/company-roles/decorators/company-roles.decorator';
+import { CompanyRolesGuard } from 'src/company-roles/guards/company-roles.guard';
 
 @Controller('user')
 export class UserController {
   public constructor(private userService: UserService) {}
-
-  @UseGuards(JwtAuthGuard)
-  @Get('')
-  public async getAllCompanyUsers(@Req() req: Request): Promise<any> {
-    return await this.userService.getAllCompanyUsers(req.user);
-  }
 
   @Post('register')
   public async register(@Body() userDto: UserDto): Promise<{ status; text }> {
@@ -47,5 +46,26 @@ export class UserController {
   @Get('profile')
   public async profile(): Promise<string> {
     return 'profile';
+  }
+
+  @UseGuards(JwtAuthGuard, CompanyRolesGuard)
+  @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
+  @Post('create')
+  public async create(@Body() userDto: UserDto) {
+    return await this.userService.create(userDto);
+  }
+
+  @UseGuards(JwtAuthGuard, CompanyRolesGuard)
+  @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
+  @Put('update/:id')
+  public async update(@Param('id') userId: any, @Body() userDto: UserDto) {
+    return await this.userService.update(userId, userDto);
+  }
+
+  @UseGuards(JwtAuthGuard, CompanyRolesGuard)
+  @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
+  @Get(':id')
+  public async getAllCompanyUsers(@Param('id') companyId: any): Promise<any> {
+    return await this.userService.getAllCompanyUsers(companyId);
   }
 }

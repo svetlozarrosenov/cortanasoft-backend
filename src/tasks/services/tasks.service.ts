@@ -82,7 +82,6 @@ export class TasksService {
   }
 
   async getAllTasks(user) {
-    console.log('crb_user', user);
     const tasks = await this.tasksModel
       .aggregate([
         { $match: { companyId: user.companyId } },
@@ -146,7 +145,6 @@ export class TasksService {
       ])
       .exec();
 
-    console.log('crb_tasks', tasks);
     return tasks;
   }
 
@@ -288,7 +286,6 @@ export class TasksService {
       ])
       .exec();
 
-    console.log('crb_task', task);
     return task.length ? task[0] : null;
   }
 

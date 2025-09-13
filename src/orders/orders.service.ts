@@ -259,7 +259,6 @@ export class OrdersService {
   }
 
   public async create(user, order) {
-    console.log('crb_order', order);
     const newOrder = await this.ordersModel.insertMany({
       ...order,
       creator: user.userId,

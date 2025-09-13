@@ -18,7 +18,7 @@ export class Supplies {
   })
   locationId: MongooseSchema.Types.ObjectId;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 
   @Prop({ required: true, type: String })

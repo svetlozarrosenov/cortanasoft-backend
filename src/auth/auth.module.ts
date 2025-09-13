@@ -8,7 +8,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
 import { AuthController } from './controllers/auth.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from 'src/user/schemas/user.schema';
+import { User, UserSchema } from 'src/user/schemas/user.schema';
 import { FirebaseDevicesProvider } from 'src/notifications/providers/firebase-devices.provider';
 import {
   FirebaseDevices,
@@ -21,7 +21,7 @@ import { NotificationsService } from 'src/notifications/notifications.service';
     MongooseModule.forFeature([
       { name: FirebaseDevices.name, schema: FirebaseDevicesSchema },
     ]),
-    MongooseModule.forFeature([{ name: 'UserSchema', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     UserModule,
     PassportModule,
     JwtModule.register({

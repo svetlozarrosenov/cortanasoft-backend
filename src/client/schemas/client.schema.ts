@@ -38,7 +38,7 @@ export class Client {
   @Prop({ type: String })
   vat: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 }
 

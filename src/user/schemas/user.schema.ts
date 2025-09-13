@@ -14,8 +14,8 @@ export class User {
   @Prop()
   lastName: string;
 
-  @Prop({})
-  role: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'roles' })
+  roleId: ObjectId;
 
   @Prop({ required: true })
   country: string;
@@ -38,7 +38,7 @@ export class User {
   @Prop({})
   firebaseUserIds: string | null;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 }
 

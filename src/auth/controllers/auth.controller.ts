@@ -12,7 +12,7 @@ import { AuthService } from 'src/auth/services/auth.service';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserDocument } from 'src/user/schemas/user.schema';
+import { User, UserDocument } from 'src/user/schemas/user.schema';
 import { Model } from 'mongoose';
 import { LoginDto } from '../dto/login.dto';
 import { FirebaseDevicesProvider } from 'src/notifications/providers/firebase-devices.provider';
@@ -23,7 +23,7 @@ import { ConfirmPasswordResetDto } from '../dto/confirm-password-reset.dto';
 export class AuthController {
   public constructor(
     private authService: AuthService,
-    @InjectModel('UserSchema') private userSchema: Model<UserDocument>,
+    @InjectModel(User.name) private userSchema: Model<UserDocument>,
     private firebaseDevicesProvider: FirebaseDevicesProvider,
   ) {}
 
