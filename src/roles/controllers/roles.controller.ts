@@ -28,8 +28,8 @@ export class RolesController {
   @UseGuards(CompanyRolesGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Post('create')
-  public async createRole(@Body() createProductDto, @Req() req: Request) {
-    return await this.rolesService.createRole(createProductDto, req.user);
+  public async createRole(@Body() createProductDto) {
+    return await this.rolesService.createRole(createProductDto);
   }
 
   @UseGuards(CompanyRolesGuard)

@@ -21,13 +21,13 @@ export class RolesService {
   }
 
   public async getCurrentUserRole(user) {
-    return await this.rolesModel.find({
+    console.log('crb_userm', user)
+    return await this.rolesModel.findOne({
       _id: new mongoose.Types.ObjectId(user.roleId),
     });
   }
 
   public async createRole(createRolesDto) {
-    console.log('crb_createRolesDto', createRolesDto)
     const newRoles = new this.rolesModel({
       ...createRolesDto,
     });

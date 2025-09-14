@@ -12,40 +12,21 @@ export const tasksTable = {
       field: 'deadline',
       headerName: 'Краен срок',
       filter: true,
-      valueFormatter: (params) =>
-        params.value ? new Date(params.value).toLocaleDateString('bg-BG') : '-',
     },
     {
       field: 'isRecurring',
       headerName: 'Повтарящо се',
       filter: true,
-      valueFormatter: (params) => (params.value ? 'Да' : 'Не'),
     },
     {
       field: 'recurrenceInterval',
       headerName: 'Интервал',
       filter: true,
-      valueFormatter: (params) => {
-        const intervalMap: Record<string, string> = {
-          daily: 'Дневно',
-          weekly: 'Седмично',
-          monthly: 'Месечно',
-        };
-        return params.value ? intervalMap[params.value] || params.value : '-';
-      },
     },
     {
       field: 'status',
       headerName: 'Статус',
       filter: true,
-      valueFormatter: (params) => {
-        const statusMap: Record<string, string> = {
-          pending: 'Чакаща',
-          in_progress: 'В процес',
-          completed: 'Завършена',
-        };
-        return statusMap[params.value] || params.value;
-      },
     },
     {
       field: 'reporter',
@@ -58,6 +39,7 @@ export const tasksTable = {
       filter: true,
     },
     {
+      field: 'actions',
       headerName: 'Действия',
       width: 150,
     },

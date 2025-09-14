@@ -24,8 +24,8 @@ export const ordersTable = {
         new Date(params.value).toLocaleString('bg-BG'),
     },
     {
+      field: 'actions',
       headerName: 'Действия',
-
       width: 120,
     },
   ],

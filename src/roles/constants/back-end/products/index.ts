@@ -1,7 +1,7 @@
 export const products = {
   sectionId: 'productsSection',
   title: 'Продукти',
-  url: 'products',
+  url: '/dashboard/products',
   tables: [],
   apis: ['GET:: products'],
 };

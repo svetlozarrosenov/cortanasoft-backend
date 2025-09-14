@@ -22,6 +22,7 @@ export const locationsTable = {
     { field: 'phone', headerName: 'Телефон', filter: true },
     { field: 'description', headerName: 'Описание', filter: true, flex: 1 },
     {
+      field: 'actions',
       headerName: 'Действия',
       width: 150,
     },

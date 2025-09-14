@@ -30,8 +30,8 @@ export const suppliesTable = {
       filter: true,
     },
     {
+      field: 'actions',
       headerName: 'Действия',
-
       width: 120,
     },
   ],

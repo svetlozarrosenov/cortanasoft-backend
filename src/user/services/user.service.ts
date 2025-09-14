@@ -23,7 +23,7 @@ export class UserService {
   ) {}
 
   public async getAllCompanyUsers(companyId) {
-    const users =  await this.userSchema.aggregate([
+    const users = await this.userSchema.aggregate([
       { $match: { companyId: new mongoose.Types.ObjectId(companyId) } },
       {
         $lookup: {
@@ -54,7 +54,7 @@ export class UserService {
         },
       },
     ]);
-    console.log('crb_users', users);
+
     return users;
   }
 
@@ -188,7 +188,7 @@ export class UserService {
     return await this.userSchema
       .findOne({ email })
       .select(
-        'email firstName middleName lastName role country city address phone companyId',
+        'email firstName middleName lastName role country roleId city address phone companyId',
       )
       .lean();
   }
