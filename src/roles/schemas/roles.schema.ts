@@ -3,6 +3,25 @@ import { Document, Schema as MongooseSchema, ObjectId } from 'mongoose';
 
 export type RolesDocument = Roles & Document;
 
+// Дефинираме интерфейс за секцията, за да улесним рекурсията
+interface Permission {
+  sectionId: string;
+  title: string;
+  url: string;
+  apis: string[];
+  tables: {
+    id: string;
+    fields: {
+      field?: string;
+      headerName: string;
+      filter?: boolean;
+      flex?: number;
+      width?: number;
+    }[];
+  }[];
+  children?: Permission[];
+}
+
 @Schema({ collection: 'roles', timestamps: true })
 export class Roles {
   @Prop({ required: true })
@@ -35,26 +54,17 @@ export class Roles {
             ],
           },
         ],
+        children: { type: [Object], default: undefined }, // Рекурсивно поле
       },
     ],
     default: [],
   })
-  permissions: {
-    sectionId: string;
-    title: string;
-    url: string;
-    apis: string[];
-    tables: {
-      id: string;
-      fields: {
-        field?: string;
-        headerName: string;
-        filter?: boolean;
-        flex?: number;
-        width?: number;
-      }[];
-    }[];
-  }[];
+  permissions: Permission[];
 }
 
 export const RolesSchema = SchemaFactory.createForClass(Roles);
+
+// Рекурсивно дефиниране на children
+RolesSchema.path('permissions').schema.add({
+  children: [{ type: RolesSchema.path('permissions').schema }],
+});

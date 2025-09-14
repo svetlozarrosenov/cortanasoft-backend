@@ -35,7 +35,7 @@ export class RolesController {
   @UseGuards(CompanyRolesGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Put('update/:id')
-  async getProduct(@Param('id') roleIdDto: any, @Body() test) {
+  async updateRole(@Param('id') roleIdDto: any, @Body() test) {
     return await this.rolesService.updateRole(roleIdDto, test);
   }
 

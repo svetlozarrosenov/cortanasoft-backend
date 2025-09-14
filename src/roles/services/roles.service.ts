@@ -11,6 +11,7 @@ export class RolesService {
   ) {}
 
   public async updateRole(_id, rolesData) {
+    console.log('crb_rolesData', rolesData)
     return await this.rolesModel.updateOne({ _id }, { ...rolesData });
   }
 
