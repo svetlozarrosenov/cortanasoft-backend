@@ -7,5 +7,12 @@ export const companies = {
   title: 'Компании',
   url: '/dashboard/companies',
   tables: [companiesTable, usersTable, rolesTable],
-  apis: ['GET:: companies'],
+  apis: [
+    'GET::/company',
+    'GET::/roles/company/:id',
+    'GET::/roles/permissions',
+    'PUT::/roles/update/:id',
+    'POST::/roles/create',
+    'DELETE::/roles/delete/:id',
+  ],
 };

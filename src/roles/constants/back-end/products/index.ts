@@ -6,21 +6,25 @@ export const products = {
   title: 'Продукти',
   url: '/dashboard/products',
   tables: [],
-  apis: ['GET:: products'],
+  apis: [],
   children: [
     {
       sectionId: 'productsListSection',
       title: 'Видове Продукти',
       url: '/dashboard/products/all',
       tables: [productsListTable],
-      apis: ['GET:: products'],
+      apis: [
+        'GET::/products',
+        'PUT::/products/update/:id',
+        'POST::/products/create',
+      ],
     },
     {
       sectionId: 'productsLotsSection',
       title: 'Партиди',
       url: '/dashboard/products/lots',
       tables: [productsLotsTable],
-      apis: ['GET:: products'],
+      apis: ['GET::/lots', 'POST::/lots/create'],
     },
   ],
 };

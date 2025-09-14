@@ -5,5 +5,5 @@ export const suppliers = {
   title: 'Доставчици',
   url: '/dashboard/suppliers',
   tables: [suppliersTable],
-  apis: ['GET:: suppliers'],
+  apis: ['GET::/supplies/suppliers'],
 };

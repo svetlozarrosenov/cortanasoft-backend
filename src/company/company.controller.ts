@@ -14,13 +14,14 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CompanyRolesGuard } from 'src/company-roles/guards/company-roles.guard';
 import { CompanyRoles } from 'src/company-roles/decorators/company-roles.decorator';
 import { CompanyRolesEnum } from 'src/company-roles/constants';
+import { RoleGuard } from 'src/roles/guards/role.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('company')
 export class CompanyController {
   constructor(private companyService: CompanyService) {}
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Get('')
   public async getAllCompanies(@Req() req: Request) {
@@ -32,14 +33,14 @@ export class CompanyController {
     return await this.companyService.getCurrentCompany(req.user);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Post('create')
   public async createCompany(@Req() req: Request, @Body() companyDto) {
     return await this.companyService.createCompany(companyDto, req.user);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Put('update/:id')
   async updateCompany(

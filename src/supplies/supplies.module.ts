@@ -7,6 +7,7 @@ import { Suppliers, SuppliersSchema } from './schemas/suppliers.schema';
 import { Products, ProductsSchema } from 'src/products/schemas/products.schema';
 import { LotsService } from 'src/lots/services/lots.service';
 import { Lots, LotsSchema } from 'src/lots/schemas/lots.schema';
+import { Roles, RolesSchema } from 'src/roles/schemas/roles.schema';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Lots, LotsSchema } from 'src/lots/schemas/lots.schema';
       { name: Suppliers.name, schema: SuppliersSchema },
       { name: Products.name, schema: ProductsSchema },
       { name: Lots.name, schema: LotsSchema },
+      { name: Roles.name, schema: RolesSchema }
     ]),
   ],
   controllers: [SuppliesController],

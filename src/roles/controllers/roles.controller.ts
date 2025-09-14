@@ -15,6 +15,7 @@ import { Request } from 'express';
 import { CompanyRolesGuard } from 'src/company-roles/guards/company-roles.guard';
 import { CompanyRolesEnum } from 'src/company-roles/constants';
 import { CompanyRoles } from 'src/company-roles/decorators/company-roles.decorator';
+import { RoleGuard } from '../guards/role.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('roles')
@@ -26,21 +27,21 @@ export class RolesController {
     return await this.rolesService.getCurrentUserRole(req.user);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Post('create')
   public async createRole(@Body() createProductDto) {
     return await this.rolesService.createRole(createProductDto);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Put('update/:id')
   async updateRole(@Param('id') roleIdDto: any, @Body() test) {
     return await this.rolesService.updateRole(roleIdDto, test);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Delete('delete/:id')
   public async removeRole(
@@ -49,14 +50,14 @@ export class RolesController {
     return await this.rolesService.removeRole(roleId);
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Get('permissions')
   public async getRolesPermissions() {
     return await this.rolesService.getRolesPermissions();
   }
 
-  @UseGuards(CompanyRolesGuard)
+  @UseGuards(CompanyRolesGuard, RoleGuard)
   @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
   @Get('company/:id')
   public async getAllCompanyRoles(@Param('id') companyId: string) {

@@ -5,5 +5,5 @@ export const orders = {
   title: 'Поръчки',
   url: '/dashboard/orders',
   tables: [ordersTable],
-  apis: ['GET:: orders'],
+  apis: ['GET::/orders', 'GET::/lots/available'],
 };

@@ -5,7 +5,8 @@ import { Request } from 'express';
 import { LotsService } from 'src/lots/services/lots.service';
 import { User } from 'src/user/schemas/user.schema';
 import mongoose, { Types } from 'mongoose';
-@UseGuards(JwtAuthGuard)
+import { RoleGuard } from 'src/roles/guards/role.guard';
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('supplies')
 export class SuppliesController {
   constructor(

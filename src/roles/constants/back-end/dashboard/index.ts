@@ -3,5 +3,10 @@ export const dashboard = {
   title: 'Дашборд',
   url: '/dashboard',
   tables: [],
-  apis: ['GET:: dashboard'],
+  apis: [
+    'GET::/orders/active',
+    'GET::/orders/revenue',
+    'GET::/tasks/active',
+    'GET::/client',
+  ],
 };

@@ -10,14 +10,16 @@ import {
   FirebaseDevicesSchema,
 } from 'src/notifications/schemas/firebase-devices.schema';
 import { Lots, LotsSchema } from 'src/lots/schemas/lots.schema';
+import { Roles, RolesSchema } from 'src/roles/schemas/roles.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Orders.name, schema: OrdersSchema }]),
     MongooseModule.forFeature([
+      { name: Orders.name, schema: OrdersSchema },
+      { name: Roles.name, schema: RolesSchema },
       { name: FirebaseDevices.name, schema: FirebaseDevicesSchema },
+      { name: Lots.name, schema: LotsSchema },
     ]),
-    MongooseModule.forFeature([{ name: Lots.name, schema: LotsSchema }]),
   ],
   controllers: [OrdersController],
   providers: [OrdersService, NotificationsService, FirebaseDevicesProvider],

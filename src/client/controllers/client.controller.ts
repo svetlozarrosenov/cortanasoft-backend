@@ -3,8 +3,9 @@ import { ClientService } from '../services/client.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 import { CreateClientDto } from '../dto/create-client.dto';
+import { RoleGuard } from 'src/roles/guards/role.guard';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('client')
 export class ClientController {
   constructor(private clientService: ClientService) {}

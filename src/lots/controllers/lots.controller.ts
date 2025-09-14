@@ -2,8 +2,9 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { LotsService } from '../services/lots.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
+import { RoleGuard } from 'src/roles/guards/role.guard';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('lots')
 export class LotsController {
   constructor(private lotsService: LotsService) {}
