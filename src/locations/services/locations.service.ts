@@ -25,6 +25,10 @@ export class LocationsService {
     );
   }
 
+  public async deleteLocation(_id): Promise<{ deletedCount: number }> {
+    return await this.locationsModel.deleteOne({ _id });
+  }
+
   public async createLocation(createLocationDto, user) {
     const newLocation = new this.locationsModel({
       ...createLocationDto,

@@ -5,5 +5,10 @@ export const locations = {
   title: 'Локации',
   url: '/dashboard/locations',
   tables: [locationsTable],
-  apis: ['GET:: locations'],
+  apis: [
+    'GET::/locations',
+    'POST::/locations/create',
+    'PUT::/locations/update/:id',
+    'DELETE::/locations/delete/:id',
+  ],
 };

@@ -24,7 +24,7 @@ export const locationsTable = {
     {
       field: 'actions',
       headerName: 'Действия',
-      width: 150,
+      minWidth: 250,
     },
   ],
 };

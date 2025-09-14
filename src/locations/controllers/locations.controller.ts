@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -11,8 +12,9 @@ import {
 import { LocationsService } from '../services/locations.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
+import { RoleGuard } from 'src/roles/guards/role.guard';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('locations')
 export class LocationsController {
   constructor(private locationsService: LocationsService) {}
@@ -23,16 +25,21 @@ export class LocationsController {
   }
 
   @Put('update/:id')
-  async getProduct(
-    @Param('id') productIdDto: any,
+  async updateLocation(
+    @Param('id') locationId: any,
     @Body() test,
     @Req() req: Request,
   ) {
     return await this.locationsService.updateLocation(
-      productIdDto,
+      locationId,
       test,
       req.user,
     );
+  }
+
+  @Delete('delete/:id')
+  async deleteLocation(@Param('id') locationId: any) {
+    return await this.locationsService.deleteLocation(locationId);
   }
 
   @Post('create')

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -37,6 +38,15 @@ export class RolesController {
   @Put('update/:id')
   async updateRole(@Param('id') roleIdDto: any, @Body() test) {
     return await this.rolesService.updateRole(roleIdDto, test);
+  }
+
+  @UseGuards(CompanyRolesGuard)
+  @CompanyRoles([CompanyRolesEnum.superAdminCompanyRoleId])
+  @Delete('delete/:id')
+  public async removeRole(
+    @Param('id') roleId: string,
+  ): Promise<{ deletedCount: number }> {
+    return await this.rolesService.removeRole(roleId);
   }
 
   @UseGuards(CompanyRolesGuard)

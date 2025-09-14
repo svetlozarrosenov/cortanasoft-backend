@@ -17,6 +17,7 @@ interface Permission {
       filter?: boolean;
       flex?: number;
       width?: number;
+      minWidth?: number;
     }[];
   }[];
   children?: Permission[];
@@ -50,6 +51,7 @@ export class Roles {
                 filter: { type: Boolean, required: false },
                 flex: { type: Number, required: false },
                 width: { type: Number, required: false },
+                minWidth: { type: Number, required: false },
               },
             ],
           },
@@ -60,6 +62,9 @@ export class Roles {
     default: [],
   })
   permissions: Permission[];
+
+  @Prop({ type: [{ type: String }], default: [] })
+  backendPermissions: string[];
 }
 
 export const RolesSchema = SchemaFactory.createForClass(Roles);
