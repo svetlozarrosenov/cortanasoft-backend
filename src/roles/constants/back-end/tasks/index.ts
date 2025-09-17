@@ -5,5 +5,10 @@ export const tasks = {
   title: 'Задачи',
   url: '/dashboard/tasks',
   tables: [tasksTable],
-  apis: ['GET::/tasks', 'POST::/tasks/create', 'PUT::/tasks/update/:id'],
+  apis: [
+    'GET::/tasks',
+    'GET::/tasks/:id',
+    'POST::/tasks/create',
+    'PUT::/tasks/update/:id',
+  ],
 };
