@@ -5,5 +5,10 @@ export const clients = {
   title: 'Клиенти',
   url: '/dashboard/clients',
   tables: [clientsTable],
-  apis: ['GET:: clients'],
+  apis: [
+    'GET::/client',
+    'POST::/client/create',
+    'PUT::/client/update/:id',
+    'DELETE::/client/delete/:id',
+  ],
 };

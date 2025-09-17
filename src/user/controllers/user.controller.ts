@@ -22,6 +22,12 @@ import { CompanyRolesGuard } from 'src/company-roles/guards/company-roles.guard'
 export class UserController {
   public constructor(private userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Get('company/collegues')
+  public async getAllCompanyCollegues(@Req() req: Request): Promise<any> {
+    return await this.userService.getAllCompanyCollegues(req.user);
+  }
+
   @Post('register')
   public async register(@Body() userDto: UserDto): Promise<{ status; text }> {
     const message = await this.userService.register(userDto);

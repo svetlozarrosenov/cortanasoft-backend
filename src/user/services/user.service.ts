@@ -22,6 +22,42 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
+  public async getAllCompanyCollegues(user) {
+    const users = await this.userSchema.aggregate([
+      { $match: { companyId: new mongoose.Types.ObjectId(user.companyId) } },
+      {
+        $lookup: {
+          from: `roles`,
+          localField: 'roleId',
+          foreignField: '_id',
+          as: 'roles',
+        },
+      },
+      {
+        $unwind: {
+          path: '$roles',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          email: 1,
+          phone: 1,
+          firstName: 1,
+          middleName: 1,
+          lastName: 1,
+          address: 1,
+          city: 1,
+          country: 1,
+          role: '$roles.name',
+          roleId: '$roles._id',
+        },
+      },
+    ]);
+
+    return users;
+  }
+
   public async getAllCompanyUsers(companyId) {
     const users = await this.userSchema.aggregate([
       { $match: { companyId: new mongoose.Types.ObjectId(companyId) } },
