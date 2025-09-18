@@ -1,6 +1,7 @@
 import { clients } from './clients';
 import { companies } from './companies';
 import { dashboard } from './dashboard';
+import { invoices } from './invoices';
 import { locations } from './locations';
 import { orders } from './orders';
 import { products } from './products';
@@ -13,6 +14,7 @@ export const permissions = [].concat(
   tasks,
   clients,
   orders,
+  invoices,
   products,
   locations,
   suppliers,

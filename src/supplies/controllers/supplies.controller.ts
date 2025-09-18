@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { SuppliesService } from '../services/Supplies.service';
+import { SuppliesService } from '../services/supplies.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 import { LotsService } from 'src/lots/services/lots.service';

@@ -18,6 +18,7 @@ export class Orders {
     type: [
       {
         productId: { type: MongooseSchema.Types.ObjectId, ref: 'products' },
+        lotId: { type: MongooseSchema.Types.ObjectId, ref: 'lots' },
         quantity: Number,
       },
     ],
@@ -30,7 +31,7 @@ export class Orders {
         'Поръчката трябва да съдържа поне един продукт с валидно ID и количество',
     },
   })
-  products: Array<{ productId: string; quantity: number }>;
+  products: Array<{ productId: ObjectId; lotId: ObjectId; quantity: number }>;
 
   @Prop({ required: true, min: 0 })
   totalPrice: number;

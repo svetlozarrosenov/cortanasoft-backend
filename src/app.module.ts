@@ -25,6 +25,7 @@ import { LotsModule } from './lots/lots.module';
 import { LocationsModule } from './locations/locations.module';
 import { TasksModule } from './tasks/tasks.module';
 import { CompanyRolesModule } from './company-roles/company-roles.module';
+import { InvoicesModule } from './invoices/invoices.module';
 // const firebaseConfig = require('../firebase.json');
 
 // admin.initializeApp({
@@ -55,6 +56,7 @@ import { CompanyRolesModule } from './company-roles/company-roles.module';
     LocationsModule,
     TasksModule,
     CompanyRolesModule,
+    InvoicesModule,
   ],
   controllers: [AppController],
   providers: [AppService, NotificationsService, FirebaseDevicesProvider],

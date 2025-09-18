@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SuppliesController } from './controllers/supplies.controller';
-import { SuppliesService } from './services/Supplies.service';
+import { SuppliesService } from './services/supplies.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Supplies, SuppliesSchema } from './schemas/supplies.schema';
 import { Suppliers, SuppliersSchema } from './schemas/suppliers.schema';

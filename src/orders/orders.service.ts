@@ -38,7 +38,7 @@ export class OrdersService {
             from: `products`,
             localField: 'products.productId',
             foreignField: '_id',
-            as: 'products.productDetails',
+            as: 'foundedProduct',
           },
         },
         {
@@ -57,7 +57,7 @@ export class OrdersService {
                 productId: '$products.productId',
                 quantity: '$products.quantity',
                 productDetails: {
-                  $arrayElemAt: ['$products.productDetails', 0],
+                  $arrayElemAt: ['$foundedProduct', 0],
                 },
               },
             },
@@ -106,7 +106,15 @@ export class OrdersService {
   async getRevenue(user: any) {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+    const endOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      0,
+      23,
+      59,
+      59,
+      999,
+    );
 
     const orders = await this.ordersModel
       .aggregate([
@@ -193,7 +201,7 @@ export class OrdersService {
             from: `products`,
             localField: 'products.productId',
             foreignField: '_id',
-            as: 'products.productDetails',
+            as: 'foundedProduct',
           },
         },
         {
@@ -212,7 +220,7 @@ export class OrdersService {
                 productId: '$products.productId',
                 quantity: '$products.quantity',
                 productDetails: {
-                  $arrayElemAt: ['$products.productDetails', 0],
+                  $arrayElemAt: ['$foundedProduct', 0],
                 },
               },
             },
@@ -259,19 +267,20 @@ export class OrdersService {
   }
 
   public async create(user, order) {
+    console.log('crb_order', order);
     const newOrder = await this.ordersModel.insertMany({
       ...order,
       creator: user.userId,
       companyId: user.companyId,
     });
 
-    const productsForUpdate = order.products.map((prd) =>
+    const lotsForUpdate = order.products.map((prd) =>
       this.lotsModel.updateOne(
         { _id: new mongoose.Types.ObjectId(prd.lotId) },
         { $inc: { quantity: -prd.quantity } },
       ),
     );
-    await Promise.all(productsForUpdate);
+    await Promise.all(lotsForUpdate);
 
     await this.lotsModel.updateOne(
       { status: 'available', quantity: 0 },
