@@ -10,5 +10,6 @@ export const tasks = {
     'GET::/tasks/:id',
     'POST::/tasks/create',
     'PUT::/tasks/update/:id',
+    'PUT::/tasks/:id/comment/create',
   ],
 };
