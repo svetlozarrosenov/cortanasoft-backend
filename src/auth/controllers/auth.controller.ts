@@ -55,7 +55,9 @@ export class AuthController {
 
     if (process.env.NODE_ENV === 'production') {
       cookieSettings.secure = true;
+      cookieSettings.domain = '.cortanasoft.com';
     }
+
     res.cookie('jwt', token, cookieSettings);
 
     return {
