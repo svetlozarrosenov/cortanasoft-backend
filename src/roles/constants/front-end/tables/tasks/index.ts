@@ -29,12 +29,12 @@ export const tasksTable = {
       filter: true,
     },
     {
-      field: 'reporter',
+      field: 'reporterName',
       headerName: 'Възложител',
       filter: true,
     },
     {
-      field: 'assignee',
+      field: 'assigneeName',
       headerName: 'Отговорник',
       filter: true,
     },

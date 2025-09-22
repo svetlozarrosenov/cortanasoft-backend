@@ -25,11 +25,11 @@ export class ClientService {
     return await newClient.save();
   }
 
-  public async updateClient(_id, rolesData, user) {
+  public async updateClient(_id, clientData, user) {
     return await this.clientsModel.updateOne(
       { _id, companyId: user.companyId },
       {
-        ...rolesData,
+        ...clientData,
       },
     );
   }

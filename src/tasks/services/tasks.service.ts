@@ -70,9 +70,11 @@ export class TasksService {
             reporter: {
               $concat: ['$reporter.firstName', ' ', '$reporter.lastName'],
             },
+            reporterId: '$reporter._id',
             assignee: {
               $concat: ['$assignee.firstName', ' ', '$assignee.lastName'],
             },
+            assigneeId: '$assignee._id',
           },
         },
       ])
@@ -134,11 +136,31 @@ export class TasksService {
             status: 1,
             deadline: 1,
             recurrenceInterval: 1,
-            reporter: {
+            reporterName: {
               $concat: ['$reporter.firstName', ' ', '$reporter.lastName'],
             },
-            assignee: {
+            assigneeName: {
               $concat: ['$assignee.firstName', ' ', '$assignee.lastName'],
+            },
+            reporter: {
+              _id: '$reporter._id',
+              name: {
+                $concat: [
+                  '$reporter.firstName',
+                  ' ',
+                  { $ifNull: ['$reporter.lastName', ''] },
+                ],
+              },
+            },
+            assignee: {
+              _id: '$assignee._id',
+              name: {
+                $concat: [
+                  '$assignee.firstName',
+                  ' ',
+                  { $ifNull: ['$assignee.lastName', ''] },
+                ],
+              },
             },
           },
         },
