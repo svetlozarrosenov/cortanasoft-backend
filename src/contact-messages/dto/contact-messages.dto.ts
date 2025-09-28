@@ -12,7 +12,13 @@ export class ContactMessagesDto {
   @IsNotEmpty({ message: 'Името е задължително.' })
   @MinLength(2, { message: 'Името трябва да е поне 2 символа.' })
   @MaxLength(50, { message: 'Името не може да надвишава 50 символа.' })
-  name: string;
+  firstName: string;
+
+  @IsString({ message: 'Името трябва да бъде текст.' })
+  @IsNotEmpty({ message: 'Името е задължително.' })
+  @MinLength(2, { message: 'Името трябва да е поне 2 символа.' })
+  @MaxLength(50, { message: 'Името не може да надвишава 50 символа.' })
+  lastName: string;
 
   @IsEmail({}, { message: 'Моля, въведете валиден имейл адрес.' })
   @IsNotEmpty({ message: 'Имейлът е задължителен.' })
@@ -32,7 +38,7 @@ export class ContactMessagesDto {
   @IsNotEmpty({ message: 'Темата е задължителна.' })
   @MinLength(3, { message: 'Темата трябва да е поне 3 символа.' })
   @MaxLength(100, { message: 'Темата не може да надвишава 100 символа.' })
-  subject: string;
+  title: string;
 
   @IsString({ message: 'Съобщението трябва да бъде текст.' })
   @IsNotEmpty({ message: 'Съобщението е задължително.' })

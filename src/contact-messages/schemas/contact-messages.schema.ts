@@ -6,7 +6,10 @@ export type ContactMessagesDocument = ContactMessages & Document;
 @Schema({ collection: 'contactMessages', timestamps: true }) // Добавено timestamps: true
 export class ContactMessages {
   @Prop({ required: true })
-  name: string;
+  firstName: string;
+
+  @Prop({ required: true })
+  lastName: string;
 
   @Prop({ required: true })
   email: string;
@@ -15,7 +18,7 @@ export class ContactMessages {
   phone: string;
 
   @Prop({ required: true })
-  subject: string;
+  title: string;
 
   @Prop({ required: true })
   message: string;
