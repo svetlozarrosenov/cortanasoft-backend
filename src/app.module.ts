@@ -26,6 +26,7 @@ import { LocationsModule } from './locations/locations.module';
 import { TasksModule } from './tasks/tasks.module';
 import { CompanyRolesModule } from './company-roles/company-roles.module';
 import { InvoicesModule } from './invoices/invoices.module';
+import { CortanaModule } from './cortana/cortana.module';
 // const firebaseConfig = require('../firebase.json');
 
 // admin.initializeApp({
@@ -57,6 +58,7 @@ import { InvoicesModule } from './invoices/invoices.module';
     TasksModule,
     CompanyRolesModule,
     InvoicesModule,
+    CortanaModule,
   ],
   controllers: [AppController],
   providers: [AppService, NotificationsService, FirebaseDevicesProvider],
