@@ -4,6 +4,7 @@ import { productsLotsTable } from '../../front-end/tables/products/products-lots
 export const products = {
   sectionId: 'productsSection',
   title: 'Продукти',
+  icon: 'FaBox',
   url: '/dashboard/products',
   tables: [],
   apis: [],

@@ -5,6 +5,7 @@ import { usersTable } from '../../front-end/tables/companies/users-table';
 export const companies = {
   sectionId: 'companiesSection',
   title: 'Компании',
+  icon: 'FaBuilding',
   url: '/dashboard/companies',
   tables: [companiesTable, usersTable, rolesTable],
   apis: [

@@ -1,5 +1,6 @@
 export const dashboard = {
   sectionId: 'dashboardSection',
+  icon: 'FaTachometerAlt',
   title: 'Дашборд',
   url: '/dashboard',
   tables: [],

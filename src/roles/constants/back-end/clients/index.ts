@@ -3,6 +3,7 @@ import { clientsTable } from '../../front-end/tables/clients';
 export const clients = {
   sectionId: 'clientsSection',
   title: 'Клиенти',
+  icon: 'FaUsers',
   url: '/dashboard/clients',
   tables: [clientsTable],
   apis: [

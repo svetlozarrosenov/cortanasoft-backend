@@ -3,10 +3,10 @@ import { Document, Schema as MongooseSchema, ObjectId } from 'mongoose';
 
 export type RolesDocument = Roles & Document;
 
-// Дефинираме интерфейс за секцията, за да улесним рекурсията
 interface Permission {
   sectionId: string;
   title: string;
+  icon: string;
   url: string;
   apis: string[];
   tables: {
@@ -39,6 +39,7 @@ export class Roles {
       {
         sectionId: { type: String, required: true },
         title: { type: String, required: true },
+        icon: { type: String },
         url: { type: String, required: true },
         apis: [{ type: String }],
         tables: [

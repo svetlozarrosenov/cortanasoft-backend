@@ -3,6 +3,7 @@ import { invoicesTable } from '../../front-end/tables/invoices';
 export const invoices = {
   sectionId: 'invoicesSection',
   title: 'Фактури',
+  icon: 'FaFileInvoiceDollar',
   url: '/dashboard/invoices',
   tables: [invoicesTable],
   apis: [
