@@ -15,7 +15,7 @@ export class TasksService {
         {
           $match: {
             companyId: user.companyId,
-            status: { $nin: ['complated'] },
+            status: { $nin: ['completed'] },
           },
         },
         {
