@@ -38,10 +38,5 @@ export const tasksTable = {
       headerName: 'Отговорник',
       filter: true,
     },
-    {
-      field: 'actions',
-      headerName: 'Действия',
-      width: 150,
-    },
   ],
 };
