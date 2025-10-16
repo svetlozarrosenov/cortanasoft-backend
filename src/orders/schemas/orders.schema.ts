@@ -31,7 +31,12 @@ export class Orders {
         'Поръчката трябва да съдържа поне един продукт с валидно ID и количество',
     },
   })
-  products: Array<{ productId: ObjectId; lotId: ObjectId; quantity: number }>;
+  products: Array<{
+    productId: ObjectId;
+    lotId: ObjectId;
+    quantity: number;
+    price: number;
+  }>;
 
   @Prop({ required: true, min: 0 })
   totalPrice: number;

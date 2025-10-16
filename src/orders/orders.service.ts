@@ -274,16 +274,20 @@ export class OrdersService {
       companyId: user.companyId,
     });
 
+    console.log('crb_prd', order);
     const lotsForUpdate = order.products.map((prd) =>
       this.lotsModel.updateOne(
-        { _id: new mongoose.Types.ObjectId(prd.lotId) },
+        {
+          _id: new mongoose.Types.ObjectId(prd.lotId),
+          companyId: user.companyId,
+        },
         { $inc: { quantity: -prd.quantity } },
       ),
     );
     await Promise.all(lotsForUpdate);
 
     await this.lotsModel.updateOne(
-      { status: 'available', quantity: 0 },
+      { companyId: user.companyId, status: 'available', quantity: 0 },
       { $set: { status: 'sold' } },
     );
 
