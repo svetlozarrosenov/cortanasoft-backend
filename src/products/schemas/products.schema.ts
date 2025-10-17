@@ -9,7 +9,10 @@ export class Products {
   name: string;
 
   @Prop({ required: true })
-  category: string;
+  model: string;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'products-categories' })
+  categoryId: ObjectId;
 
   @Prop({ required: true })
   description: string;

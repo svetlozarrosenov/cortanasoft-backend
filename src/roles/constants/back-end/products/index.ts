@@ -1,3 +1,4 @@
+import { productsCategoriesListTable } from '../../front-end/tables/products/categories-list';
 import { productsListTable } from '../../front-end/tables/products/products-list';
 import { productsLotsTable } from '../../front-end/tables/products/products-lots';
 
@@ -18,6 +19,17 @@ export const products = {
         'GET::/products',
         'PUT::/products/update/:id',
         'POST::/products/create',
+      ],
+    },
+    {
+      sectionId: 'productsCategoriesListSection',
+      title: 'Категории',
+      url: '/dashboard/products/categories',
+      tables: [productsCategoriesListTable],
+      apis: [
+        'GET::/products/categories',
+        'POST::/products/categories/create',
+        'PUT::/products/categories/update/:id',
       ],
     },
     {

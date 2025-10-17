@@ -18,5 +18,10 @@ export const suppliersTable = {
     { field: 'address', headerName: 'Адрес', filter: true, flex: 1 },
     { field: 'city', headerName: 'Град', filter: true, flex: 1 },
     { field: 'country', headerName: 'Държава', filter: true, flex: 1 },
+    {
+      field: 'actions',
+      headerName: 'Действия',
+      minWidth: 250,
+    },
   ],
 };

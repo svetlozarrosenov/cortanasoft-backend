@@ -3,11 +3,17 @@ import { CreateProductDto } from './dto/create-products.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Products, ProductsDocument } from './schemas/products.schema';
 import mongoose, { Model } from 'mongoose';
+import {
+  ProductsCategories,
+  ProductsCategoriesDocument,
+} from './schemas/product-category.schema';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Products.name) private productsModel: Model<ProductsDocument>,
+    @InjectModel(ProductsCategories.name)
+    private productsCategoriesModel: Model<ProductsCategoriesDocument>,
   ) {}
 
   public async updateProduct(_id, productData, user) {
@@ -19,13 +25,11 @@ export class ProductsService {
 
   public async getProducts(user) {
     const products = await this.productsModel.aggregate([
-      // Match products by companyId
       {
         $match: {
           companyId: new mongoose.Types.ObjectId(user.companyId),
         },
       },
-      // Lookup to Lots, filtering only available lots
       {
         $lookup: {
           from: 'lots',
@@ -45,7 +49,6 @@ export class ProductsService {
           as: 'lots',
         },
       },
-      // Calculate totalQuantity by summing quantity from lots
       {
         $addFields: {
           quantity: {
@@ -53,18 +56,30 @@ export class ProductsService {
           },
         },
       },
-      // Remove the lots field
       {
         $unset: ['lots'],
       },
-      // Optionally project specific fields (all fields are included by default)
+      {
+        $lookup: {
+          from: `products-categories`,
+          localField: 'categoryId',
+          foreignField: '_id',
+          as: 'categories',
+        },
+      },
+      {
+        $unwind: {
+          path: '$categories',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
       {
         $project: {
           _id: 1,
           name: 1,
           description: 1,
           price: 1,
-          category: 1,
+          category: '$categories.name',
           companyId: 1,
           quantity: 1,
         },
@@ -81,5 +96,27 @@ export class ProductsService {
     });
 
     return await newProduct.save();
+  }
+
+  public async getProductsCategories(user) {
+    return await this.productsCategoriesModel.find({
+      companyId: user.companyId,
+    });
+  }
+
+  public async createProductCategory(createProductCategoryDto: any, user) {
+    const newProductCategory = new this.productsCategoriesModel({
+      ...createProductCategoryDto,
+      companyId: user.companyId,
+    });
+
+    return await newProductCategory.save();
+  }
+
+  public async updateProductCategory(_id, productCategoryData, user) {
+    return await this.productsCategoriesModel.updateOne(
+      { _id, companyId: user.companyId },
+      { ...productCategoryData },
+    );
   }
 }

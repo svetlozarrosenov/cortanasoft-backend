@@ -4,12 +4,17 @@ import { ProductsService } from './products.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Products, ProductsSchema } from './schemas/products.schema';
 import { Roles, RolesSchema } from 'src/roles/schemas/roles.schema';
+import {
+  ProductsCategories,
+  ProductsCategoriesSchema,
+} from './schemas/product-category.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Products.name, schema: ProductsSchema },
-      { name: Roles.name, schema: RolesSchema }
+      { name: ProductsCategories.name, schema: ProductsCategoriesSchema },
+      { name: Roles.name, schema: RolesSchema },
     ]),
   ],
   controllers: [ProductsController],
