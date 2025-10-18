@@ -10,6 +10,9 @@ export const companies = {
   tables: [companiesTable, usersTable, rolesTable],
   apis: [
     'GET::/company',
+    'GET::/company-roles',
+    'POST::/company/create',
+    'PUT::/company/update/:id',
     'GET::/roles/company/:id',
     'GET::/roles/permissions',
     'PUT::/roles/update/:id',

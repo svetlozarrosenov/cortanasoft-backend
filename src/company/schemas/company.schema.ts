@@ -9,8 +9,8 @@ export class Company {
   @Prop({})
   name: string;
 
-  @Prop({})
-  personInCharge: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'users' })
+  personInCharge: ObjectId;
 
   @Prop({})
   vatNumber: number;
@@ -51,6 +51,9 @@ export class Company {
     default: CompanyRolesEnum.clientCompanyRoleId,
   })
   roleId: ObjectId;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'currency' })
+  currencyId: ObjectId;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

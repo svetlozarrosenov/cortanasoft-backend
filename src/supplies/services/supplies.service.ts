@@ -20,7 +20,7 @@ export class SuppliesService {
   ) {}
 
   public async getAllSupplies(user) {
-    const Suppliess = await this.suppliesModel
+    const supplies = await this.suppliesModel
       .aggregate([
         { $match: { companyId: user.companyId } },
         {
@@ -38,10 +38,24 @@ export class SuppliesService {
           },
         },
         {
+          $lookup: {
+            from: `currency`,
+            localField: 'currencyId',
+            foreignField: '_id',
+            as: 'currency',
+          },
+        },
+        {
+          $unwind: {
+            path: '$currency',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
           $project: {
-            price: 1,
+            totalPrice: 1,
             status: 1,
-            currency: 1,
+            currency: '$currency.code',
             deliveryDate: 1,
             products: 1,
             companyId: 1,
@@ -50,7 +64,8 @@ export class SuppliesService {
         },
       ])
       .exec();
-    return Suppliess;
+
+    return supplies;
   }
 
   public async getAllSuppliers(user) {

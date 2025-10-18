@@ -2,6 +2,7 @@ export const productsLotsTable = {
   id: 'productsLotsTable',
   fields: [
     { field: 'name', headerName: 'Име', filter: true, flex: 1 },
+    { field: 'model', headerName: 'Модел', filter: true, flex: 1 },
     { field: 'description', headerName: 'Описание', filter: true, flex: 1 },
     {
       field: 'price',
@@ -11,10 +12,5 @@ export const productsLotsTable = {
     },
     { field: 'category', headerName: 'Категория', filter: true },
     { field: 'quantity', headerName: 'Наличност', filter: true },
-    {
-      field: 'actions',
-      headerName: 'Действия',
-      width: 150,
-    },
   ],
 };

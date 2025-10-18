@@ -2,6 +2,7 @@ export const productsListTable = {
   id: 'productsListTable',
   fields: [
     { field: 'name', headerName: 'Име', filter: true, flex: 1 },
+    { field: 'model', headerName: 'Модел', filter: true, flex: 1 },
     { field: 'description', headerName: 'Описание', filter: true, flex: 1 },
     {
       field: 'price',

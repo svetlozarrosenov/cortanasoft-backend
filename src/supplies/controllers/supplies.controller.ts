@@ -35,6 +35,7 @@ export class SuppliesController {
     @Body() createSuppliesDto: any,
     @Req() req: Request,
   ) {
+    console.log('crb_createSuppliesDto', createSuppliesDto)
     const user = req.user as User;
     const supply = await this.SuppliesService.createSupplies(
       createSuppliesDto,

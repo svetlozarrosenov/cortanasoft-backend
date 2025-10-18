@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Company, CompanyDocument } from '../schemas/company.schema';
-import { CompanyRolesEnum } from 'src/company-roles/constants';
 
 @Injectable()
 export class CompanyService {
@@ -11,8 +10,75 @@ export class CompanyService {
   ) {}
 
   public async getAllCompanies() {
-    const company = await this.companyModel.find({});
+    const company = await this.companyModel.aggregate([
+      {
+        $lookup: {
+          from: `users`,
+          localField: 'personInCharge',
+          foreignField: '_id',
+          as: 'users',
+        },
+      },
+      {
+        $unwind: {
+          path: '$users',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: `currency`,
+          localField: 'currencyId',
+          foreignField: '_id',
+          as: 'currency',
+        },
+      },
+      {
+        $unwind: {
+          path: '$currency',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: `company-roles`,
+          localField: 'roleId',
+          foreignField: '_id',
+          as: 'companyRoles',
+        },
+      },
+      {
+        $unwind: {
+          path: '$companyRoles',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          name: 1,
+          personInCharge: {
+            $concat: ['$users.firstName', ' ', '$users.lastName'],
+          },
+          email: 1,
+          phone: 1,
+          eik: 1,
+          industry: 1,
+          description: 1,
+          country: 1,
+          city: 1,
+          address: 1,
+          price: 1,
+          vatNumber: 1,
+          charging: 1,
+          roleId: 1,
+          currencyId: 1,
+          currency: '$currency.code',
+          roleInTheSystem: '$companyRoles.name',
+        },
+      },
+    ]);
 
+    console.log('crb_company123', company);
     return company;
   }
 

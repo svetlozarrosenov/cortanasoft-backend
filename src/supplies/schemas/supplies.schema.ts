@@ -22,13 +22,13 @@ export class Supplies {
   companyId: ObjectId;
 
   @Prop({ required: true, type: String })
-  price: string;
+  totalPrice: string;
 
   @Prop({ required: true, type: String })
   status: string;
 
-  @Prop({ required: true, type: String })
-  currency: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'currency' })
+  currencyId: ObjectId;
 
   @Prop({ required: true, type: Date })
   deliveryDate: Date;

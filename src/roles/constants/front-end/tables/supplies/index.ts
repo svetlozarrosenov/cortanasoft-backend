@@ -7,7 +7,7 @@ export const suppliesTable = {
       filter: true,
     },
     {
-      field: 'price',
+      field: 'totalPrice',
       headerName: 'Цена на доставка',
       filter: true,
     },

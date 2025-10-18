@@ -29,6 +29,20 @@ export class LotsService {
         },
       },
       {
+        $lookup: {
+          from: `products-categories`,
+          localField: 'product.categoryId',
+          foreignField: '_id',
+          as: 'categories',
+        },
+      },
+      {
+        $unwind: {
+          path: '$categories',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           productDetails: '$product',
           status: 1,
@@ -37,8 +51,10 @@ export class LotsService {
           serialNumber: 1,
           price: '$product.price',
           name: '$product.name',
+          model: '$product.model',
           description: '$product.description',
-          category: '$product.category',
+          categoryId: 1,
+          category: '$categories.name',
           batchNotes: 1,
           lotNumber: 1,
         },

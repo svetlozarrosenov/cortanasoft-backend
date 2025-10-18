@@ -20,10 +20,8 @@ export class CompanyRolesService {
     );
   }
 
-  public async getAllCompanyCompanyRoles(user) {
-    return await this.CompanyRolesModel.find({
-      companyId: new mongoose.Types.ObjectId(user.companyId),
-    });
+  public async getAllCompanySystemRoles() {
+    return await this.CompanyRolesModel.find({});
   }
 
   public async createRole(createCompanyRolesDto, user) {

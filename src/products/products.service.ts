@@ -77,8 +77,10 @@ export class ProductsService {
         $project: {
           _id: 1,
           name: 1,
+          model: 1,
           description: 1,
           price: 1,
+          categoryId: 1,
           category: '$categories.name',
           companyId: 1,
           quantity: 1,
