@@ -95,6 +95,7 @@ export class LotsService {
           serialNumber: 1,
           price: '$product.price',
           name: '$product.name',
+          model: '$product.model',
           description: '$product.description',
           category: '$product.category',
           batchNotes: 1,
