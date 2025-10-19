@@ -10,7 +10,7 @@ export class Company {
   name: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'users' })
-  personInCharge: ObjectId;
+  personInChargeId: ObjectId;
 
   @Prop({})
   vatNumber: number;

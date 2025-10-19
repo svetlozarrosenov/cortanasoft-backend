@@ -14,7 +14,7 @@ export class CompanyService {
       {
         $lookup: {
           from: `users`,
-          localField: 'personInCharge',
+          localField: 'personInChargeId',
           foreignField: '_id',
           as: 'users',
         },
@@ -59,6 +59,7 @@ export class CompanyService {
           personInCharge: {
             $concat: ['$users.firstName', ' ', '$users.lastName'],
           },
+          personInChargeId: 1,
           email: 1,
           phone: 1,
           eik: 1,
