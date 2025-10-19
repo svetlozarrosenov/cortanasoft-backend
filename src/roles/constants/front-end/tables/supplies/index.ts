@@ -5,6 +5,13 @@ export const suppliesTable = {
       field: 'companyName',
       headerName: 'Доставчик',
       filter: true,
+      width: 350,
+    },
+    {
+      field: 'location',
+      headerName: 'Локация на доставката',
+      filter: true,
+      width: 350,
     },
     {
       field: 'totalPrice',

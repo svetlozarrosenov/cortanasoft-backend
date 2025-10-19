@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { SuppliesService } from '../services/supplies.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
@@ -35,10 +35,25 @@ export class SuppliesController {
     @Body() createSuppliesDto: any,
     @Req() req: Request,
   ) {
-    console.log('crb_createSuppliesDto', createSuppliesDto)
     const user = req.user as User;
     const supply = await this.SuppliesService.createSupplies(
       createSuppliesDto,
+      user,
+    );
+
+    return supply;
+  }
+
+  @Put('update/:id')
+  public async editSupply(
+    @Param('id') supplyId: any,
+    @Body() editSuppliesDto: any,
+    @Req() req: Request,
+  ) {
+    const user = req.user as User;
+    const supply = await this.SuppliesService.editSupply(
+      supplyId,
+      editSuppliesDto,
       user,
     );
 

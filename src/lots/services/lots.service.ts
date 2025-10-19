@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Lots, LotsDocument } from '../schemas/lots.schema';
 
 @Injectable()
@@ -110,5 +110,17 @@ export class LotsService {
     const newLots = await this.lotsModel.insertMany(lots);
 
     return await newLots;
+  }
+
+  public async findLotsBySuppliesId(supplyId) {
+    return await this.lotsModel.find({
+      supplyId: new mongoose.Types.ObjectId(supplyId),
+    });
+  }
+
+  public async deleteLotsBySuppliesId(supplyId): Promise<any> {
+    return await this.lotsModel.deleteMany({
+      supplyId: new mongoose.Types.ObjectId(supplyId),
+    });
   }
 }

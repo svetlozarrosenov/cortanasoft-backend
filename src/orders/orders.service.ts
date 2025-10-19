@@ -267,21 +267,19 @@ export class OrdersService {
   }
 
   public async create(user, order) {
-    console.log('crb_order', order);
     const newOrder = await this.ordersModel.insertMany({
       ...order,
       creator: user.userId,
       companyId: user.companyId,
     });
 
-    console.log('crb_prd', order);
     const lotsForUpdate = order.products.map((prd) =>
       this.lotsModel.updateOne(
         {
           _id: new mongoose.Types.ObjectId(prd.lotId),
           companyId: user.companyId,
         },
-        { $inc: { quantity: -prd.quantity } },
+        { $inc: { quantity: -prd.quantity }, $set: { isUsed: true } },
       ),
     );
     await Promise.all(lotsForUpdate);

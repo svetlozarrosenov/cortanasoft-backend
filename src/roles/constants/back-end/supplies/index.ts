@@ -6,5 +6,10 @@ export const supplies = {
   icon: 'FaShippingFast',
   url: '/dashboard/supplies',
   tables: [suppliesTable],
-  apis: ['GET::/supplies', 'POST::/supplies/create', 'GET::/currency'],
+  apis: [
+    'GET::/supplies',
+    'POST::/supplies/create',
+    'PUT::/supplies/update/:id',
+    'GET::/currency',
+  ],
 };

@@ -79,14 +79,35 @@ export class CompanyService {
       },
     ]);
 
-    console.log('crb_company123', company);
     return company;
   }
 
   public async getCurrentCompany(user) {
-    const company = await this.companyModel
-      .findOne({ _id: user.companyId })
-      .select('name');
+    const company = await this.companyModel.aggregate([
+      { $match: { _id: user.companyId } },
+      {
+        $lookup: {
+          from: `currency`,
+          localField: 'currencyId',
+          foreignField: '_id',
+          as: 'currency',
+        },
+      },
+      {
+        $unwind: {
+          path: '$currency',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          currency: '$currency.code',
+          currencyId: '$currency._id',
+        },
+      },
+    ]);
 
     return company;
   }

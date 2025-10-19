@@ -48,9 +48,6 @@ export class CompanyController {
     @Body() companyData,
     @Req() req: Request,
   ) {
-    console.log('crb_updateCompanyDto', updateCompanyDto);
-    console.log('crb_companyData', companyData);
-
     return await this.companyService.updateCompany(
       updateCompanyDto,
       companyData,

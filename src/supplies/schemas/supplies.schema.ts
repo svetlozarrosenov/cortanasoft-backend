@@ -8,7 +8,7 @@ export class Supplies {
   @Prop({ type: Array<MongooseSchema.Types.ObjectId> })
   products: [ObjectId];
 
-  @Prop({ type: MongooseSchema.Types.ObjectId })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'suppliers' })
   supplierId: ObjectId;
 
   @Prop({
