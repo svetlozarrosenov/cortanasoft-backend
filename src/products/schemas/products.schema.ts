@@ -5,20 +5,26 @@ export type ProductsDocument = Products & Document;
 
 @Schema({ collection: 'products', timestamps: true })
 export class Products {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   model: string;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'products-categories' })
   categoryId: ObjectId;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   description: string;
 
-  @Prop({ required: true })
-  price: number;
+  @Prop({ type: Number, required: true })
+  salePrice: number;
+
+  @Prop({ type: Number, required: true })
+  costPrice: number;
+
+  @Prop({ type: Number, required: true })
+  vat: number;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;

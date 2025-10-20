@@ -12,38 +12,38 @@ export class Company {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'users' })
   personInChargeId: ObjectId;
 
-  @Prop({})
-  vatNumber: number;
+  @Prop({ type: String })
+  vatNumber: string;
 
-  @Prop({})
+  @Prop({ type: Number })
   eik: number;
 
-  @Prop({})
+  @Prop({ type: String })
   country: string;
 
-  @Prop({})
+  @Prop({ type: String })
   city: string;
 
-  @Prop({})
+  @Prop({ type: String })
   address: string;
 
-  @Prop({})
+  @Prop({ type: String })
   email: string;
 
-  @Prop({})
+  @Prop({ type: String })
   phone: string;
 
-  @Prop({})
+  @Prop({ type: String })
   description: string;
 
-  @Prop({})
+  @Prop({ type: String })
   industry: string;
 
-  @Prop({})
+  @Prop({ type: String })
   price: string;
 
   //monthly or yearly
-  @Prop({})
+  @Prop({ type: String })
   charging: string;
 
   @Prop({
