@@ -17,7 +17,6 @@ import {
 import { ContactMessagesModule } from './contact-messages/contact-messages.module';
 import { CompanyModule } from './company/company.module';
 import { ClientModule } from './client/client.module';
-import { RoleSettingsModule } from './role-settings/role-settings.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { SuppliesModule } from './supplies/supplies.module';
@@ -52,7 +51,6 @@ import { CurrencyModule } from './currency/currency.module';
     ClientModule,
     ProductsModule,
     OrdersModule,
-    RoleSettingsModule,
     SuppliesModule,
     LotsModule,
     LocationsModule,
