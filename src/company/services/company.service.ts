@@ -105,6 +105,7 @@ export class CompanyService {
           name: 1,
           currency: '$currency.code',
           currencyId: '$currency._id',
+          vatNumber: 1,
         },
       },
     ]);
