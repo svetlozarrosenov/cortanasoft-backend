@@ -107,7 +107,7 @@ export class SuppliesService {
 
     try {
       await newSupplies.save();
-      console.log('crb_createSuppliesDto', createSuppliesDto)
+      console.log('crb_createSuppliesDto', createSuppliesDto);
       const lotsData = createSuppliesDto.products.map((product) => {
         return {
           ...product,
@@ -151,7 +151,7 @@ export class SuppliesService {
     }
 
     const oldLots = await this.lotsService.findLotsBySuppliesId(id);
-    console.log('crb_oldLots', oldLots)
+    console.log('crb_oldLots', oldLots);
     if (!oldLots.length || oldLots.some((lot) => lot.isUsed)) {
       throw new BadRequestException(
         'Cannot edit supplies: some lots are already used',
@@ -174,9 +174,14 @@ export class SuppliesService {
         supplierId: updateSuppliesDto.supplierId
           ? new mongoose.Types.ObjectId(updateSuppliesDto.supplierId)
           : updateSuppliesDto.supplierId,
+        locationId: updateSuppliesDto.locationId
+          ? new mongoose.Types.ObjectId(updateSuppliesDto.locationId)
+          : updateSuppliesDto.locationId,
+        currencyId: product.currencyId
+          ? new mongoose.Types.ObjectId(product.currencyId)
+          : product.currencyId,
         supplyId: id ? new mongoose.Types.ObjectId(id) : id,
         companyId: user.companyId,
-        locationId: updateSuppliesDto.locationId,
         lotNumber: product.lotNumber ? product.lotNumber : defaultLotNumber,
       };
     });

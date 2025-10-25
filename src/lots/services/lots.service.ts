@@ -126,7 +126,7 @@ export class LotsService {
           expiryDate: 1,
           quantity: 1,
           serialNumber: 1,
-          price: '$product.price',
+          salePrice: '$product.salePrice',
           name: '$product.name',
           model: '$product.model',
           description: '$product.description',
