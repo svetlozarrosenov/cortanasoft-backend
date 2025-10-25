@@ -1,12 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema, ObjectId } from 'mongoose';
+import { SupplyProductSchema } from './supply-product.schema';
 
 export type SuppliesDocument = Supplies & Document;
 
+export interface SupplyProductInterface {
+  quantity: number;
+  costPrice: number;
+  totalCostPrice: number;
+  currencyId: string;
+  currencyRate: number;
+  productId: string;
+  vatRate: number;
+}
+
 @Schema({ collection: 'supplies', timestamps: true })
 export class Supplies {
-  @Prop({ type: Array<MongooseSchema.Types.ObjectId> })
-  products: [ObjectId];
+  @Prop({ type: Array<SupplyProductSchema> })
+  products: [SupplyProductSchema];
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'suppliers' })
   supplierId: ObjectId;
@@ -21,8 +32,8 @@ export class Supplies {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'company' })
   companyId: ObjectId;
 
-  @Prop({ required: true, type: String })
-  totalPrice: string;
+  @Prop({ required: true, type: Number })
+  totalPrice: number;
 
   @Prop({ required: true, type: String })
   status: string;

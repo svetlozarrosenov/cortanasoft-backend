@@ -14,7 +14,7 @@ export const productsListTable = {
       headerName: 'Доставна цена',
       filter: true,
     },
-    { field: 'vat', headerName: 'ДДС', filter: true },
+    { field: 'vatNumber', headerName: 'ДДС', filter: true },
     { field: 'description', headerName: 'Описание', filter: true, width: 350 },
     { field: 'category', headerName: 'Категория', filter: true },
     {

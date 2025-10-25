@@ -29,9 +29,6 @@ export class Lots extends Document {
   @Prop({ type: Types.ObjectId, ref: 'supplies', required: true })
   supplyId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'warehouses' })
-  warehouseId: Types.ObjectId;
-
   @Prop({ type: Types.ObjectId, ref: 'company', required: true })
   companyId: Types.ObjectId;
 
@@ -42,14 +39,26 @@ export class Lots extends Document {
   })
   status: string;
 
-  @Prop({ type: Number, min: 0 })
-  costPrice: number;
-
   @Prop({ type: Boolean, default: false })
   isUsed: boolean;
 
   @Prop({ type: String })
   batchNotes: string;
+
+  @Prop({ type: Number, required: true })
+  costPrice: number;
+
+  @Prop({ type: Number, required: true })
+  totalCostPrice: number;
+
+  @Prop({ type: Types.ObjectId, ref: 'currency' })
+  currencyId: Types.ObjectId;
+
+  @Prop({ type: Number, required: true })
+  currencyRate: number;
+
+  @Prop({ type: Number, required: true })
+  vatRate: number;
 }
 
 export const LotsSchema = SchemaFactory.createForClass(Lots);

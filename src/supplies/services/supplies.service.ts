@@ -107,6 +107,7 @@ export class SuppliesService {
 
     try {
       await newSupplies.save();
+      console.log('crb_createSuppliesDto', createSuppliesDto)
       const lotsData = createSuppliesDto.products.map((product) => {
         return {
           ...product,
@@ -117,12 +118,14 @@ export class SuppliesService {
           supplierId: createSuppliesDto.supplierId
             ? new mongoose.Types.ObjectId(createSuppliesDto.supplierId)
             : createSuppliesDto.supplierId,
-          warehouseId: createSuppliesDto.warehouseId
-            ? new mongoose.Types.ObjectId(createSuppliesDto.warehouseId)
-            : createSuppliesDto.warehouseId,
+          locationId: createSuppliesDto.locationId
+            ? new mongoose.Types.ObjectId(createSuppliesDto.locationId)
+            : createSuppliesDto.locationId,
+          currencyId: product.currencyId
+            ? new mongoose.Types.ObjectId(product.currencyId)
+            : product.currencyId,
           supplyId: newSupplies._id,
           companyId: user.companyId,
-          locationId: createSuppliesDto.locationId,
           lotNumber: product.lotNumber ? product.lotNumber : defaultLotNumber,
         };
       });
@@ -172,9 +175,6 @@ export class SuppliesService {
           ? new mongoose.Types.ObjectId(updateSuppliesDto.supplierId)
           : updateSuppliesDto.supplierId,
         supplyId: id ? new mongoose.Types.ObjectId(id) : id,
-        warehouseId: updateSuppliesDto.warehouseId
-          ? new mongoose.Types.ObjectId(updateSuppliesDto.warehouseId)
-          : updateSuppliesDto.warehouseId,
         companyId: user.companyId,
         locationId: updateSuppliesDto.locationId,
         lotNumber: product.lotNumber ? product.lotNumber : defaultLotNumber,

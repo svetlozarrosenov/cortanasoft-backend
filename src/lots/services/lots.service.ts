@@ -43,20 +43,39 @@ export class LotsService {
         },
       },
       {
+        $lookup: {
+          from: `currency`,
+          localField: 'currencyId',
+          foreignField: '_id',
+          as: 'currencyData',
+        },
+      },
+      {
+        $unwind: {
+          path: '$currencyData',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           productDetails: '$product',
           status: 1,
           expiryDate: 1,
           quantity: 1,
           serialNumber: 1,
-          price: '$product.price',
+          salePrice: '$product.salePrice',
           name: '$product.name',
           model: '$product.model',
           description: '$product.description',
           categoryId: 1,
           category: '$categories.name',
           batchNotes: 1,
+          vatRate: 1,
+          currencyRate: 1,
+          costPrice: 1,
+          totalCostPrice: 1,
           lotNumber: 1,
+          currency: '$currencyData.code',
         },
       },
     ]);
@@ -87,6 +106,20 @@ export class LotsService {
         },
       },
       {
+        $lookup: {
+          from: `currency`,
+          localField: 'currencyId',
+          foreignField: '_id',
+          as: 'currency',
+        },
+      },
+      {
+        $unwind: {
+          path: '$currency',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           productId: '$product._id',
           status: 1,
@@ -99,7 +132,12 @@ export class LotsService {
           description: '$product.description',
           category: '$product.category',
           batchNotes: 1,
+          vatRate: 1,
+          currencyRate: 1,
+          costPrice: 1,
+          totalCostPrice: 1,
           lotNumber: 1,
+          currency: '$currency.code',
         },
       },
     ]);
