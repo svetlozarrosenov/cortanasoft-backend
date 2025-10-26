@@ -11,6 +11,7 @@ import {
 } from 'src/notifications/schemas/firebase-devices.schema';
 import { Lots, LotsSchema } from 'src/lots/schemas/lots.schema';
 import { Roles, RolesSchema } from 'src/roles/schemas/roles.schema';
+import { Supplies, SuppliesSchema } from 'src/supplies/schemas/supplies.schema';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { Roles, RolesSchema } from 'src/roles/schemas/roles.schema';
       { name: Roles.name, schema: RolesSchema },
       { name: FirebaseDevices.name, schema: FirebaseDevicesSchema },
       { name: Lots.name, schema: LotsSchema },
+      { name: Supplies.name, schema: SuppliesSchema },
     ]),
   ],
   controllers: [OrdersController],
