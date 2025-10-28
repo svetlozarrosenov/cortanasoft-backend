@@ -6,7 +6,6 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { Supplies, SuppliesDocument } from '../schemas/supplies.schema';
-import { Suppliers, SuppliersDocument } from '../schemas/suppliers.schema';
 import {
   Products,
   ProductsDocument,
@@ -17,8 +16,6 @@ import { LotsService } from 'src/lots/services/lots.service';
 export class SuppliesService {
   constructor(
     @InjectModel(Supplies.name) private suppliesModel: Model<SuppliesDocument>,
-    @InjectModel(Suppliers.name)
-    private suppliersModel: Model<SuppliersDocument>,
     @InjectModel(Products.name) private productsModel: Model<ProductsDocument>,
     private lotsService: LotsService,
   ) {}
@@ -88,13 +85,6 @@ export class SuppliesService {
       .exec();
 
     return supplies;
-  }
-
-  public async getAllSuppliers(user) {
-    const Suppliers = await this.suppliersModel
-      .find({ companyId: user.companyId })
-      .exec();
-    return Suppliers;
   }
 
   public async createSupplies(createSuppliesDto, user) {
@@ -195,14 +185,5 @@ export class SuppliesService {
     );
 
     return updatedSupplies;
-  }
-
-  public async createSupplier(createSuppliersDto, user) {
-    const newSuppliers = new this.suppliersModel({
-      ...createSuppliersDto,
-      companyId: user.companyId,
-    });
-
-    return await newSuppliers.save();
   }
 }

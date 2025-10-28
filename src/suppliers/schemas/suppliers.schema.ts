@@ -20,7 +20,7 @@ export class Suppliers {
   @Prop({ type: String })
   address: string;
 
-  @Prop({ type: String, unique: true })
+  @Prop({ type: String })
   email: string;
 
   @Prop({ type: String })

@@ -27,6 +27,7 @@ import { CompanyRolesModule } from './company-roles/company-roles.module';
 import { InvoicesModule } from './invoices/invoices.module';
 import { CortanaModule } from './cortana/cortana.module';
 import { CurrencyModule } from './currency/currency.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
 // const firebaseConfig = require('../firebase.json');
 
 // admin.initializeApp({
@@ -59,6 +60,7 @@ import { CurrencyModule } from './currency/currency.module';
     InvoicesModule,
     CortanaModule,
     CurrencyModule,
+    SuppliersModule,
   ],
   controllers: [AppController],
   providers: [AppService, NotificationsService, FirebaseDevicesProvider],

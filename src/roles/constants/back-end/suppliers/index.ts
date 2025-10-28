@@ -7,8 +7,8 @@ export const suppliers = {
   url: '/dashboard/suppliers',
   tables: [suppliersTable],
   apis: [
-    'GET::/supplies/suppliers',
-    'POST::/supplies/supplier/create',
-    'PUT::/supplies/supplier/update/:id',
+    'GET::/suppliers',
+    'POST::/suppliers/create',
+    'PUT::/suppliers/update/:id',
   ],
 };
