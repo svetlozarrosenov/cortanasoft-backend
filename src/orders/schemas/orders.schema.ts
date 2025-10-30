@@ -27,6 +27,9 @@ export class Orders {
     default: 'pending',
   })
   status: string;
+
+  @Prop({ required: true, type: Date })
+  orderDate: Date;
 }
 
 export const OrdersSchema = SchemaFactory.createForClass(Orders);
