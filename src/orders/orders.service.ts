@@ -39,20 +39,6 @@ export class OrdersService {
           },
         },
         {
-          $lookup: {
-            from: `products`,
-            localField: 'products.productId',
-            foreignField: '_id',
-            as: 'foundedProduct',
-          },
-        },
-        {
-          $unwind: {
-            path: '$products',
-            preserveNullAndEmptyArrays: true,
-          },
-        },
-        {
           $group: {
             _id: '$_id',
             clientId: { $first: '$clientId' },
@@ -84,18 +70,7 @@ export class OrdersService {
                 { $ifNull: ['$client.lastName', ''] },
               ],
             },
-            products: {
-              $map: {
-                input: '$products',
-                as: 'prod',
-                in: {
-                  productId: '$$prod.productId',
-                  quantity: '$$prod.quantity',
-                  productName: '$$prod.productDetails.name',
-                  productPrice: '$$prod.productDetails.price',
-                },
-              },
-            },
+            lots: 1,
             totalPrice: 1,
             status: 1,
             createdAt: 1,
@@ -321,7 +296,7 @@ export class OrdersService {
 
   public async create(user: any, order: any) {
     let newOrder: any = null;
-
+    console.log('crb_order', order)
     try {
       newOrder = await this.ordersModel.create([
         {
