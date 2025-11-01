@@ -54,6 +54,12 @@ export class Company {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'currency' })
   currencyId: ObjectId;
+
+  @Prop({ type: String })
+  iban: string;
+
+  @Prop({ type: String })
+  logo: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

@@ -75,6 +75,7 @@ export class CompanyService {
           currencyId: 1,
           currency: '$currency.code',
           roleInTheSystem: '$companyRoles.name',
+          iban: 1,
         },
       },
     ]);
@@ -106,6 +107,10 @@ export class CompanyService {
           currency: '$currency.code',
           currencyId: '$currency._id',
           vatNumber: 1,
+          address: { $concat: ['$city', ', ', '$country', ', ', '$address'] },
+          eik: 1,
+          logo: 1,
+          iban: 1,
         },
       },
     ]);

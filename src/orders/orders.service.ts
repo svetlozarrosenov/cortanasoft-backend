@@ -39,30 +39,10 @@ export class OrdersService {
           },
         },
         {
-          $group: {
-            _id: '$_id',
-            clientId: { $first: '$clientId' },
-            client: { $first: '$client' },
-            products: {
-              $push: {
-                productId: '$products.productId',
-                quantity: '$products.quantity',
-                productDetails: {
-                  $arrayElemAt: ['$foundedProduct', 0],
-                },
-              },
-            },
-            totalPrice: { $first: '$totalPrice' },
-            status: { $first: '$status' },
-            createdAt: { $first: '$createdAt' },
-            updatedAt: { $first: '$updatedAt' },
-          },
-        },
-        {
           $project: {
             _id: 1,
             clientId: 1,
-            clientEmail: '$client.email',
+            client: 1,
             clientName: {
               $concat: [
                 '$client.firstName',
@@ -80,6 +60,7 @@ export class OrdersService {
       ])
       .exec();
 
+    console.log('crb_orders', orders);
     return orders;
   }
 
@@ -296,7 +277,7 @@ export class OrdersService {
 
   public async create(user: any, order: any) {
     let newOrder: any = null;
-    console.log('crb_order', order)
+    console.log('crb_order', order);
     try {
       newOrder = await this.ordersModel.create([
         {

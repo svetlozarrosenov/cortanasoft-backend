@@ -33,7 +33,7 @@ export class Client {
   description: string;
 
   @Prop({ type: String })
-  egn: string;
+  eik: string;
 
   @Prop({ type: String })
   vat: string;

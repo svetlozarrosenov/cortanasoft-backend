@@ -3,6 +3,12 @@ import { Schema as MongooseSchema, Types } from 'mongoose';
 
 @Schema()
 export class LotSchema {
+  @Prop({ type: String })
+  name: string;
+
+  @Prop({ type: String })
+  model: string;
+
   @Prop({ required: true, type: Number })
   quantity: number;
 
@@ -26,6 +32,9 @@ export class LotSchema {
 
   @Prop({ type: String })
   serialNumber: string;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'products' })
+  productId: Types.ObjectId;
 
   @Prop({ type: Date })
   expiryDate: Date;
