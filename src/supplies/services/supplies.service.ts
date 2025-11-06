@@ -88,16 +88,17 @@ export class SuppliesService {
   }
 
   public async createSupplies(createSuppliesDto, user) {
-    const defaultLotNumber = `lot-${Date.now()}`;
-
-    const newSupplies = new this.suppliesModel({
-      ...createSuppliesDto,
-      companyId: user.companyId,
-    });
+    const session = await this.suppliesModel.db.startSession();
+    session.startTransaction();
 
     try {
-      await newSupplies.save();
-      console.log('crb_createSuppliesDto', createSuppliesDto);
+      const newSupplies = new this.suppliesModel({
+        ...createSuppliesDto,
+        companyId: user.companyId,
+      });
+
+      await newSupplies.save({ session });
+
       const lotsData = createSuppliesDto.products.map((product) => {
         return {
           ...product,
@@ -116,18 +117,21 @@ export class SuppliesService {
             : product.currencyId,
           supplyId: newSupplies._id,
           companyId: user.companyId,
-          lotNumber: product.lotNumber ? product.lotNumber : defaultLotNumber,
+          lotNumber: product.lotNumber,
         };
       });
 
-      await this.lotsService.createLots(lotsData);
+      // Предай сесията на lotsService, за да се използва в createLots
+      await this.lotsService.createLots(lotsData, session);
+
+      await session.commitTransaction();
+      session.endSession();
 
       return newSupplies;
     } catch (error) {
-      if (newSupplies._id) {
-        await this.suppliesModel.findByIdAndDelete(newSupplies._id);
-      }
-      throw error;
+      await session.abortTransaction();
+      session.endSession();
+      throw error; // Или обработи грешката по твой начин
     }
   }
 

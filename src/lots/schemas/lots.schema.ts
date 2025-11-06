@@ -5,7 +5,7 @@ export type LotsDocument = Lots & Document;
 
 @Schema({ collection: 'lots', timestamps: true })
 export class Lots extends Document {
-  @Prop({ type: String, required: true, unique: true })
+  @Prop({ type: String })
   lotNumber: string;
 
   @Prop({ type: Types.ObjectId, ref: 'products', required: true })
@@ -62,3 +62,4 @@ export class Lots extends Document {
 }
 
 export const LotsSchema = SchemaFactory.createForClass(Lots);
+LotsSchema.index({ companyId: 1, lotNumber: 1 }, { unique: true });

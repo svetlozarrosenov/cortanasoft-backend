@@ -145,10 +145,32 @@ export class LotsService {
     return Lots;
   }
 
-  public async createLots(lots) {
-    const newLots = await this.lotsModel.insertMany(lots);
+  public async createLots(lots, session = null) {
+    let localSession = session;
 
-    return await newLots;
+    if (!localSession) {
+      localSession = await this.lotsModel.db.startSession();
+      localSession.startTransaction();
+    }
+
+    try {
+      const newLots = await this.lotsModel.insertMany(lots, {
+        session: localSession,
+      });
+
+      if (!session) {
+        await localSession.commitTransaction();
+        localSession.endSession();
+      }
+
+      return newLots;
+    } catch (error) {
+      if (!session) {
+        await localSession.abortTransaction();
+        localSession.endSession();
+      }
+      throw error;
+    }
   }
 
   public async findLotsBySuppliesId(supplyId) {
