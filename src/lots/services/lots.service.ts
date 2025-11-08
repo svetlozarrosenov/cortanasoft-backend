@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import mongoose, { ClientSession, Model } from 'mongoose';
 import { Lots, LotsDocument } from '../schemas/lots.schema';
 
 @Injectable()
@@ -57,6 +57,20 @@ export class LotsService {
         },
       },
       {
+        $lookup: {
+          from: `locations`,
+          localField: 'locationId',
+          foreignField: '_id',
+          as: 'locationData',
+        },
+      },
+      {
+        $unwind: {
+          path: '$locationData',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           productDetails: '$product',
           status: 1,
@@ -75,6 +89,8 @@ export class LotsService {
           costPrice: 1,
           totalCostPrice: 1,
           lotNumber: 1,
+          locationName: '$locationData.name',
+          location: '$locationData',
           currency: '$currencyData.code',
         },
       },
@@ -173,15 +189,30 @@ export class LotsService {
     }
   }
 
-  public async findLotsBySuppliesId(supplyId) {
-    return await this.lotsModel.find({
+  public async findLotsBySuppliesId(supplyId: string, session?: ClientSession) {
+    const query = this.lotsModel.find({
       supplyId: new mongoose.Types.ObjectId(supplyId),
     });
+
+    if (session) {
+      query.session(session);
+    }
+
+    return await query.exec();
   }
 
-  public async deleteLotsBySuppliesId(supplyId): Promise<any> {
-    return await this.lotsModel.deleteMany({
+  public async deleteLotsBySuppliesId(
+    supplyId: string,
+    session?: ClientSession,
+  ): Promise<any> {
+    const query = this.lotsModel.deleteMany({
       supplyId: new mongoose.Types.ObjectId(supplyId),
     });
+
+    if (session) {
+      query.session(session);
+    }
+
+    return await query.exec();
   }
 }

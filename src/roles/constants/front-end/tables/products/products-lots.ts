@@ -10,6 +10,12 @@ export const productsLotsTable = {
     { field: 'name', headerName: 'Име', filter: true },
     { field: 'model', headerName: 'Модел', filter: true },
     {
+      field: 'locationName',
+      headerName: 'Текуща Локация',
+      filter: true,
+      width: 250,
+    },
+    {
       field: 'serialNumber',
       headerName: 'Сериен Номер',
       filter: true,

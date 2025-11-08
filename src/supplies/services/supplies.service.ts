@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import mongoose, { ClientSession, Model } from 'mongoose';
 import { Supplies, SuppliesDocument } from '../schemas/supplies.schema';
 import {
   Products,
@@ -121,7 +121,6 @@ export class SuppliesService {
         };
       });
 
-      // Предай сесията на lotsService, за да се използва в createLots
       await this.lotsService.createLots(lotsData, session);
 
       await session.commitTransaction();
@@ -131,35 +130,44 @@ export class SuppliesService {
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
-      throw error; // Или обработи грешката по твой начин
+      throw error;
     }
   }
 
   public async editSupply(id: string, updateSuppliesDto, user) {
-    const supplies = await this.suppliesModel.findOne({
-      _id: id,
-      companyId: user.companyId,
-    });
-    if (!supplies) {
-      throw new NotFoundException('Supplies not found');
-    }
+    const session: ClientSession = await this.suppliesModel.db.startSession();
+    session.startTransaction();
 
-    const oldLots = await this.lotsService.findLotsBySuppliesId(id);
-    console.log('crb_oldLots', oldLots);
-    if (!oldLots.length || oldLots.some((lot) => lot.isUsed)) {
-      throw new BadRequestException(
-        'Cannot edit supplies: some lots are already used',
+    try {
+      // 1. Намиране на доставката
+      const supplies = await this.suppliesModel
+        .findOne({
+          _id: id,
+          companyId: user.companyId,
+        })
+        .session(session);
+
+      if (!supplies) {
+        throw new NotFoundException('Supplies not found');
+      }
+
+      const oldLots = await this.lotsService.findLotsBySuppliesId(id, session);
+
+      if (!oldLots.length || oldLots.some((lot) => lot.isUsed)) {
+        throw new BadRequestException(
+          'Cannot edit supplies: some lots are already used',
+        );
+      }
+
+      const deletedLots = await this.lotsService.deleteLotsBySuppliesId(
+        id,
+        session,
       );
-    }
+      if (!deletedLots?.deletedCount) {
+        throw new BadRequestException(`We couldn't delete the old lots!`);
+      }
 
-    const deletedLots = await this.lotsService.deleteLotsBySuppliesId(id);
-    if (!deletedLots?.deletedCount) {
-      throw new BadRequestException(`We couldn't delete the old lots!`);
-    }
-
-    const defaultLotNumber = `lot-${Date.now()}`;
-    const newLotsData = updateSuppliesDto.products.map((product) => {
-      return {
+      const newLotsData = updateSuppliesDto.products.map((product) => ({
         ...product,
         productId: product.productId
           ? new mongoose.Types.ObjectId(product.productId)
@@ -174,20 +182,27 @@ export class SuppliesService {
         currencyId: product.currencyId
           ? new mongoose.Types.ObjectId(product.currencyId)
           : product.currencyId,
-        supplyId: id ? new mongoose.Types.ObjectId(id) : id,
+        supplyId: new mongoose.Types.ObjectId(id),
         companyId: user.companyId,
-        lotNumber: product.lotNumber ? product.lotNumber : defaultLotNumber,
-      };
-    });
+        lotNumber: product.lotNumber,
+      }));
 
-    await this.lotsService.createLots(newLotsData);
+      await this.lotsService.createLots(newLotsData, session);
 
-    const updatedSupplies = await this.suppliesModel.findByIdAndUpdate(
-      id,
-      updateSuppliesDto,
-      { new: true },
-    );
+      const updatedSupplies = await this.suppliesModel.findByIdAndUpdate(
+        id,
+        updateSuppliesDto,
+        { new: true, session },
+      );
 
-    return updatedSupplies;
+      await session.commitTransaction();
+
+      return updatedSupplies;
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
 }
