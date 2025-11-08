@@ -13,6 +13,7 @@ export const products = {
     {
       sectionId: 'productsListSection',
       title: 'Видове Продукти',
+      icon: 'FaBoxOpen',
       url: '/dashboard/products/all',
       tables: [productsListTable],
       apis: [
@@ -24,6 +25,7 @@ export const products = {
     {
       sectionId: 'productsCategoriesListSection',
       title: 'Категории',
+      icon: 'FaSitemap',
       url: '/dashboard/products/categories',
       tables: [productsCategoriesListTable],
       apis: [
@@ -35,6 +37,7 @@ export const products = {
     {
       sectionId: 'productsLotsSection',
       title: 'Партиди',
+      icon: 'FaLayerGroup',
       url: '/dashboard/products/lots',
       tables: [productsLotsTable],
       apis: ['GET::/lots', 'POST::/lots/create'],
